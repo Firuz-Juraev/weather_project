@@ -1,6 +1,7 @@
 
 class WeatherClass: 
-    def __init__(self, time, summary, windSpeed, temperature, uvIndex, visibility):
+    def __init__(self, city_id, time, summary, windSpeed, temperature, uvIndex, visibility):
+        self.city_id = city_id
         self.time = time 
         self.summary = summary 
         self.windSpeed = windSpeed 
@@ -8,5 +9,4 @@ class WeatherClass:
         self.uvIndex = uvIndex 
         self.visibility = visibility 
         
-    def __str__(self):
-        return 'weather'
+    

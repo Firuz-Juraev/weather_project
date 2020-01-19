@@ -1,1 +1,2 @@
-# weather_project
+# Weather Project 
+by Firuz Juraev

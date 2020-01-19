@@ -27,9 +27,14 @@ class Database:
         c = self.conn.cursor()
         
         c.execute(query) 
-        max_time = c.fetchone()  
+        max_time = c.fetchone()
+        max_time = max_time[0] 
         
-        if (time - max_time[0]) >= 60:
+        if type(max_time) != int: 
+            max_time = 0 
+            
+        
+        if (time - max_time) >= 60:
             return True 
         else:
             return False
@@ -48,6 +53,7 @@ class Database:
             c.execute(query) 
             
             self.conn.commit()
+            print ('Weather info is updated!')
         else: 
             print ("Already Up-to-date")
             
@@ -66,6 +72,30 @@ class Database:
             cities.append(city[0]) 
             
         return cities 
+        
+    
+    def all_weather_info(self):
+        query = "SELECT * FROM weather;"; 
+        
+        c = self.conn.cursor()
+        c.execute(query) 
+        
+        weather_list = [] 
+        
+        for weather in c.fetchall():
+            weather_obj = weather_class.WeatherClass(weather[0], weather[1], weather[2], 
+                                                     weather[3], weather[4], weather[5], 
+                                                     weather[6]) 
+            weather_list.append(weather_obj) 
+            
+        return weather_list 
+            
+    
+        
+        
+        
+        
+        
         
         
     

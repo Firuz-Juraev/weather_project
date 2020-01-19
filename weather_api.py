@@ -9,13 +9,12 @@ class WeatherAPI:
         self.link = settings.API_LINK 
         self.database_obj = database.Database()
     
-    def weather_info(self, city_id): 
+    def weather_info(self, city_id, time=''): 
         lat, lon = self.database_obj.city_info(city_id) 
-        request = self.link + self.api_key + "/%f,%f" % (lat, lon) + '?exclude=hourly,daily,flags'
+        request = self.link + self.api_key + "/%f,%f" % (lat, lon) + time + '?exclude=hourly,daily,flags'
         
         response = requests.get(request)
         
-        print(response.text) 
         
         w_city_id = city_id 
         w_time = response.json()['currently']['time'] 
@@ -30,6 +29,19 @@ class WeatherAPI:
                                                  w_uvIndex, w_visibility)
         
         return weather_obj
+    
+    
+    def weather_info_for_last_10_mins(self, city_id): 
+        weather_list = []
+        weather_object = self.weather_info(city_id) 
+        current_time = weather_object.time
+        
+        weather_list.append(weather_object)
+        
+        for i in range(1,10): 
+            weather_list.append(self.weather_info(city_id, "," + str(current_time-i*60) ))
+        
+        return weather_list 
         
 
 

@@ -52,10 +52,12 @@ class Database:
             
             c.execute(query) 
             
+            print ('City ' + str(weather_object.city_id) + ': Weather info is updated!')
+            
             self.conn.commit()
-            print ('Weather info is updated!')
+            
         else: 
-            print ("Already Up-to-date")
+            print ('City ' + str(weather_object.city_id) + ": Already updated!")
             
         
         

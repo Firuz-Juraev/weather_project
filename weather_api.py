@@ -7,8 +7,9 @@ class WeatherAPI:
     def __init__(self):
         self.api_key = settings.API_KEY
         self.link = settings.API_LINK 
-        self.database_obj = database.Database()
-    
+        self.database_obj = database.Database() 
+        
+   #This function gets city_id and optinal time as parameter and returns WeatherClass object      
     def weather_info(self, city_id, time=''): 
         lat, lon = self.database_obj.city_info(city_id) 
         request = self.link + self.api_key + "/%f,%f" % (lat, lon) + time + '?exclude=hourly,daily,flags'
@@ -31,6 +32,7 @@ class WeatherAPI:
         return weather_obj
     
     
+    # This function retrives 10 temperatures for last 10 minutes and returns all of them as list of WeatherClass objects 
     def weather_info_for_last_10_mins(self, city_id): 
         weather_list = []
         weather_object = self.weather_info(city_id) 
@@ -43,5 +45,3 @@ class WeatherAPI:
         
         return weather_list 
         
-
-
